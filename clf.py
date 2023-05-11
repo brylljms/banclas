@@ -2,7 +2,7 @@ from torchvision.models import resnet18, ResNet18_Weights
 from torchvision import models, transforms
 import numpy as np
 import torch
-from cv2 import cv2
+import cv2
 from PIL import Image
 
 IMAGE_SIZE = (256, 256)
