@@ -1,10 +1,8 @@
-import pandas as pd
 import streamlit as st
 from PIL import Image
 import numpy as np
-from clf import segment_img, predict
+from clf import predict
 import base64
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 hide_menu_style = """
         <style>
