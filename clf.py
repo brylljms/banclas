@@ -46,8 +46,7 @@ def predict(image_path):
     
     image_path = cv2.resize(image_path, IMAGE_SIZE)
     image_path = segment_img(image_path)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     model_save_name = '_classifier_.pth'
     path = F"{model_save_name}"
