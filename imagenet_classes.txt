@@ -1,0 +1,4 @@
+Raw
+Ripe
+Overripe
+Unripe
