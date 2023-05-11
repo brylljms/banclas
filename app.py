@@ -11,7 +11,7 @@ hide_menu_style = """
         """
 
 # Loading Image using PIL
-im = Image.open('/Users/bryllejames/Desktop/streamlit/logo.png')
+im = Image.open('logo.png')
 # Adding Image to web app
 st.set_page_config(page_title="Banclas", page_icon = im, layout = "wide")
 st.markdown(hide_menu_style, unsafe_allow_html=True)
@@ -40,7 +40,7 @@ def add_bg_from_local(image_file):
     unsafe_allow_html=True
     )
 #add a background image    
-add_bg_from_local('/Users/bryllejames/Desktop/streamlit/bg.png') 
+add_bg_from_local('bg.png') 
 
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
