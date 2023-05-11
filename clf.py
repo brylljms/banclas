@@ -50,7 +50,7 @@ def predict(image_path):
     
 
     model_save_name = '_classifier_.pth'
-    path = F"/Users/bryllejames/Desktop/streamlit/{model_save_name}"
+    path = F"{model_save_name}"
     model = torch.load(path, map_location=torch.device('cpu'))
     model.to(device)
     
