@@ -13,7 +13,7 @@ hide_menu_style = """
 # Loading Image using PIL
 im = Image.open('logo.png')
 # Adding Image to web app
-st.set_page_config(page_title="Banclas", page_icon = im, layout = "wide")
+st.set_page_config(page_title="Banclas", page_icon = im)
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 padding = 0
@@ -44,9 +44,9 @@ add_bg_from_local('bg.png')
 
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
-head_col_1, head_col_2 = st.columns([0.15,2])
+head_col_1, head_col_2 = st.columns([0.4,2])
 with head_col_1:
-    st.image(im, width=80)
+    st.image(im, width=120)
 with head_col_2:
     st.title("BANCLAS: Cavendish Banana Maturity Classification App")
 
@@ -61,45 +61,37 @@ def display_image(image):
 
 labels = []
 
-def title(test = " "):
-    st.markdown("**")
-
-with col_1:
-    uploaded_files = st.file_uploader("Upload an image", type=['jpeg', 'jpg', 'png'], 
+uploaded_files = st.file_uploader("Upload an image", type=['jpeg', 'jpg', 'png'], 
                             accept_multiple_files=True)
     
-    # Display the drop-down menu
-    selected_image = st.selectbox("Select an image", uploaded_files, format_func=lambda file: file.name if file else "")
-    # Display the selected image
-    if selected_image:
-        img = Image.open(selected_image)
-        display_image(img)
+# Display the drop-down menu
+selected_image = st.selectbox("Select an image", uploaded_files, format_func=lambda file: file.name if file else "")
+# Display the selected image
+if selected_image:
+    img = Image.open(selected_image)
+    display_image(img)
 
-with col_2:
-    if uploaded_files:
-        labels = predict(np.array(img))
-        class_labels = []
-        score = []
-        colors = ["#718355", "#97A97C", "#CFE1B9", "#FFFBEB"]
-        for i in labels:
-            class_labels.append(i[0])
-            score.append(i[1])
-    
-    #if uploaded_files:
-        st.subheader("Result")
-        # print out the prediction labels with scores
-        st.write("Actual Prediction:",  labels[0][0])
-        st.write("Score: ", str(labels[0][1]))
-        st.write("Appearance:", labels[0][2])
+
+if uploaded_files:
+    labels = predict(np.array(img))
+    class_labels = []
+    score = []
+    for i in labels:
+        class_labels.append(i[0])
+        score.append(i[1])
+
+    st.header("Result:")
+    # print out the prediction labels with scores
+    pred_act = labels[0][0]
+    pred_des = labels[0][2]
         
-        # Create the donut chart figure
-        fig = go.Figure(data=[go.Pie(labels=class_labels, values=score, hole=0.6)])
+    act_pred = """
+    #### Actual Prediction: <span style = "color:white">{}</span>   
+    """.format(pred_act)
 
-        # Set layout options
-        fig.update_layout(margin=dict(t=0, l=0, r=0, b=0),
-                          width = 700,
-                          paper_bgcolor='rgba(0,0,0,0)' , # Set paper_bgcolor to no color
-                          colorway = colors)
+    des_pred = """
+    #### Appearance: <span style = "color:white">{}</span>   
+    """.format(pred_des)
 
-        # Display the donut chart in Streamlit
-        st.plotly_chart(fig)
+    st.markdown(act_pred, unsafe_allow_html=True)
+    st.markdown(des_pred, unsafe_allow_html=True)
